@@ -1,0 +1,76 @@
+body{
+    background-color: black;
+    color: green;
+}
+
+#title{
+    width: 20%;
+    margin-left: 40%;
+    text-align: center;
+    font-size: 3em;
+    font-family: "Calibri";
+}
+
+.container{
+    width: 75%;
+    margin-left: 3%;
+    height: 45em;
+    margin-top: 3%;
+    position: absolute;
+}
+
+.bar{
+    background-color: green;
+    display: inline-block;
+    margin-top: auto;
+    border-style: solid;
+    border-color: black;
+}
+
+.buttons{
+    width: 20%;
+    height: 40em;
+    float: right;
+    margin-top: 6%;
+    margin-right: 4.5%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 20% 20% 10% 10%;
+    column-gap: 2%;
+    row-gap: 1%;
+}
+
+.algorithmButton{
+    color: green;
+    border-style: solid;
+    border-color: green;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.algorithmButton:hover{
+    cursor: pointer;
+}
+
+.algorithmButton p{
+    margin-top: 20%;
+    font-size: xx-large;
+}
+
+.longButton{
+    background-color: green;
+    color: black;
+    grid-column-start: 1;
+    grid-column-end: -1 ;
+    font-size: xx-large;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.longButton p{
+    margin-top: -0.00001em;
+}
+
+.longButton:hover{
+    cursor: pointer;
+}
