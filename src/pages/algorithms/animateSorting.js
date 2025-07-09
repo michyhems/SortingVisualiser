@@ -1,17 +1,4 @@
-export function Animate2(element, animations, animationSpeed) {
-    const bars = element;
-    var barId;
-    var value;
-    for (let i = 0; i < animations.length; i++) {
-        setTimeout(() => {
-            [barId, value] = animations[i];
-            let barOneStyle = bars[barId].style;
-            barOneStyle.height = `${value}%`;
-        }, i * animationSpeed);
-    }
-}
-
-export function Animate(element, animations, animationSpeed) {
+export function Animate(element, animations) {
     const bars = element;
     var barId;
     var value;

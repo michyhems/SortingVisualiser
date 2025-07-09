@@ -1,3 +1,5 @@
+import { Animate } from "./animateSorting";
+
 function mergeSort(array, startIndex, endIndex, arrayCopy, animations) {
     if (startIndex === endIndex) return;
     let midIndex = Math.floor((startIndex + endIndex) / 2);
@@ -40,14 +42,5 @@ function merge(array, startIndex, midIndex, endIndex, arrayCopy, animations) {
 export function animateMerge(array, element) {
     let arrayCopy = array.slice();
     let animations = mergeSort(array, 0, array.length - 1, arrayCopy, []);
-    const bars = element;
-    var barOneId;
-    var value;
-    for (let i = 0; i < animations.length; i++) {
-        setTimeout(() => {
-            [barOneId, value] = animations[i];
-            let barOneStyle = bars[barOneId].style;
-            barOneStyle.height = `${value}%`;
-        }, i * 15);
-    }
+    Animate(element, animations);
 }

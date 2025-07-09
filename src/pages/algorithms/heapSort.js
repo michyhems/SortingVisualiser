@@ -1,57 +1,38 @@
 import { Animate } from "./animateSorting";
 
-function heapify(arr, n, i, animations) {
-    let largest = i;
-
-    let l = 2 * i + 1;
-
-    let r = 2 * i + 2;
-
-    if (l < n && arr[l] > arr[largest]) {
-        largest = l;
+function heapify(array, startIndex, animations) {
+    let parentIndex;
+    let placeHolder;
+    for (let i = startIndex; i > 0; i--) {
+        parentIndex = Math.floor((i - 1) / 2);
+        if (array[parentIndex] < array[i]) {
+            animations.push([i, array[parentIndex]]);
+            animations.push([parentIndex, array[i]]);
+            placeHolder = array[parentIndex];
+            array[parentIndex] = array[i];
+            array[i] = placeHolder;
+        }
     }
-
-    if (r < n && arr[r] > arr[largest]) {
-        largest = r;
-    }
-
-    if (largest !== i) {
-        let temp = arr[i]; // Swap
-        animations.push([i, arr[largest]]);
-        animations.push([largest, arr[i]]);
-        arr[i] = arr[largest];
-        arr[largest] = temp;
-
-        // Recursively heapify the affected sub-tree
-        heapify(arr, n, largest, animations);
-    }
+    return array;
 }
 
-// Main function to do heap sort
-function heapSort(arr) {
-    let n = arr.length;
-    let animations = [];
-    // Build heap (rearrange array)
-    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-        heapify(arr, n, i, animations);
+function heapSort(array, startIndex, animations) {
+    if (startIndex === 0) {
+        return animations;
     }
-
-    // One by one extract an element from heap
-    for (let i = n - 1; i > 0; i--) {
-        // Move current root to end
-        animations.push([i, arr[0]]);
-        animations.push([0, arr[i]]);
-        let temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-
-        // Call max heapify on the reduced heap
-        heapify(arr, i, 0, animations);
-    }
-    return animations;
+    let heap = heapify(array, startIndex, animations);
+    animations.push([0, array[startIndex]]);
+    animations.push([startIndex, array[0]]);
+    let placeHolder = heap[0];
+    heap[0] = heap[startIndex];
+    heap[startIndex] = placeHolder;
+    startIndex--;
+    heapSort(heap, startIndex, animations);
 }
 
 export function animateHeapSort(array, element) {
-    const animations = heapSort(array);
+    let animations = [];
+    heapSort(array, array.length - 1, animations);
+    console.log(animations);
     Animate(element, animations, 15);
 }
