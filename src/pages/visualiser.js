@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { generate } from "./arrayGenerator";
 import { bubbleSort } from "./algorithms/bubbleSort";
 import { quickSort } from "./algorithms/quickSort";
@@ -9,6 +9,8 @@ import { Text } from "./algorithms/text";
 const Visualiser = () => {
     const [array, setArray] = useState([]);
     const [focus, setFocus] = useState("Select");
+    const animationInProgress = useRef(false);
+    const killAnimation = useRef(false);
 
     useEffect(() => {
         setArray(generate());
@@ -57,13 +59,22 @@ const Visualiser = () => {
             barStyle = bar.style;
             barStyle.height = `${value}%`;
             index++;
-            if (index === length) {
+            if (index === length || killAnimation.current === true) {
+                animationInProgress.current = false;
+                killAnimation.current = false;
                 cancelAnimationFrame(stopID);
             } else {
                 window.requestAnimationFrame(animateBar);
             }
         }
+        animationInProgress.current = true;
         window.requestAnimationFrame(animateBar);
+    }
+
+    function reset() {
+        if (!animationInProgress.current) setArray(generate());
+        killAnimation.current = true;
+        setArray(generate());
     }
 
     return (
@@ -121,7 +132,7 @@ const Visualiser = () => {
                     <div class="sort" onClick={() => sort()}>
                         Sort
                     </div>
-                    <div class="newGraph" onClick={() => setArray(generate())}>
+                    <div class="newGraph" onClick={() => reset()}>
                         New Graph
                     </div>
                 </div>
