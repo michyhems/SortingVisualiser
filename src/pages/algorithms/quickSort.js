@@ -1,5 +1,3 @@
-import { Animate } from "./animateSorting";
-
 function partition(array, startIndex, endIndex, animations) {
     let pivot = array[endIndex];
     let i = startIndex - 1;
@@ -23,16 +21,11 @@ function partition(array, startIndex, endIndex, animations) {
     return i;
 }
 
-function quickSort(array, startIndex, endIndex, animations) {
+export function quickSort(array, startIndex, endIndex, animations) {
     if (startIndex < endIndex) {
         let pivot = partition(array, startIndex, endIndex, animations);
         quickSort(array, startIndex, pivot - 1, animations);
         quickSort(array, pivot + 1, endIndex, animations);
     }
     return animations;
-}
-
-export function animateQuickSort(array, element) {
-    const animations = quickSort(array, 0, array.length - 1, []);
-    Animate(element, animations, 5);
 }

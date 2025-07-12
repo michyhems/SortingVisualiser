@@ -1,5 +1,3 @@
-import { Animate } from "./animateSorting";
-
 function heapify(array, startIndex, animations) {
     let parentIndex;
     let placeHolder;
@@ -16,7 +14,7 @@ function heapify(array, startIndex, animations) {
     return array;
 }
 
-function heapSort(array, startIndex, animations) {
+export function heapSort(array, startIndex, animations) {
     if (startIndex === 0) {
         return animations;
     }
@@ -28,11 +26,4 @@ function heapSort(array, startIndex, animations) {
     heap[startIndex] = placeHolder;
     startIndex--;
     heapSort(heap, startIndex, animations);
-}
-
-export function animateHeapSort(array, element) {
-    let animations = [];
-    heapSort(array, array.length - 1, animations);
-    console.log(animations);
-    Animate(element, animations, 15);
 }

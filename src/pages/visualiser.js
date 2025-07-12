@@ -1,30 +1,69 @@
 import { useState, useEffect } from "react";
 import { generate } from "./arrayGenerator";
-import { animateBubbleSort } from "./algorithms/bubbleSort";
-import { animateQuickSort } from "./algorithms/quickSort";
-import { animateMerge } from "./algorithms/mergeSort";
-import { animateHeapSort } from "./algorithms/heapSort";
+import { bubbleSort } from "./algorithms/bubbleSort";
+import { quickSort } from "./algorithms/quickSort";
+import { mergeSort } from "./algorithms/mergeSort";
+import { heapSort } from "./algorithms/heapSort";
+import { Text } from "./algorithms/text";
 
 const Visualiser = () => {
     const [array, setArray] = useState([]);
-    const [focus, setFocus] = useState("none");
+    const [focus, setFocus] = useState("Select");
 
     useEffect(() => {
         setArray(generate());
     }, []);
 
+    const algorithmName = () => {
+        return focus === "Select"
+            ? "Select"
+            : focus === "bubbleSort"
+            ? "Bubble Sort"
+            : focus === "quickSort"
+            ? "Quick Sort"
+            : focus === "mergeSort"
+            ? "Merge Sort"
+            : "Heap Sort";
+    };
+
     function sort() {
-        if (focus === "none") return;
+        if (focus === "Select") return;
         let bars = document.getElementsByClassName("bar");
         if (focus === "bubbleSort") {
-            animateBubbleSort(array, bars);
+            Animate(bubbleSort(array));
         } else if (focus === "quickSort") {
-            animateQuickSort(array, bars);
+            Animate(quickSort(array, 0, array.length - 1, []));
         } else if (focus === "mergeSort") {
-            animateMerge(array, bars);
+            Animate(mergeSort(array, 0, array.length - 1, array.slice(), []));
         } else if (focus === "heapSort") {
-            animateHeapSort(array, bars);
+            let animations = [];
+            heapSort(array, array.length - 1, animations);
+            Animate(animations);
         }
+    }
+
+    function Animate(animations) {
+        let bars = document.getElementsByClassName("bar");
+        var barId;
+        var value;
+        let index = 0;
+        let stopID;
+        let bar;
+        let barStyle;
+        let length = animations.length;
+        function animateBar() {
+            [barId, value] = animations[index];
+            bar = bars[barId];
+            barStyle = bar.style;
+            barStyle.height = `${value}%`;
+            index++;
+            if (index === length) {
+                cancelAnimationFrame(stopID);
+            } else {
+                window.requestAnimationFrame(animateBar);
+            }
+        }
+        window.requestAnimationFrame(animateBar);
     }
 
     return (
@@ -42,61 +81,53 @@ const Visualiser = () => {
                     ></div>
                 ))}
             </div>
-            <div class="buttons">
-                <div
-                    class="algorithmButton"
-                    id="bubbleSort"
-                    onClick={() => setFocus("bubbleSort")}
-                    style={{
-                        backgroundColor:
-                            focus === "bubbleSort" ? "green" : null,
-                        color: focus === "bubbleSort" ? "black" : null,
-                    }}
-                >
-                    <p>Bubble Sort</p>
+            <div class="console">
+                <div class="buttonRow">
+                    <div class="dropdown">
+                        <div class="dropdownButton" tabIndex="1">
+                            {algorithmName()}
+                        </div>
+                        <div class="menu">
+                            <div
+                                id="bubbleSort"
+                                class="menuItem"
+                                onClick={() => setFocus("bubbleSort")}
+                            >
+                                Bubble Sort
+                            </div>
+                            <div
+                                id="quickSort"
+                                class="menuItem"
+                                onClick={() => setFocus("quickSort")}
+                            >
+                                Quick Sort
+                            </div>
+                            <div
+                                id="mergeSort"
+                                class="menuItem"
+                                onClick={() => setFocus("mergeSort")}
+                            >
+                                Merge Sort
+                            </div>
+                            <div
+                                id="heapSort"
+                                class="menuItem"
+                                onClick={() => setFocus("heapSort")}
+                            >
+                                Heap Sort
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sort" onClick={() => sort()}>
+                        Sort
+                    </div>
+                    <div class="newGraph" onClick={() => setArray(generate())}>
+                        New Graph
+                    </div>
                 </div>
-                <div
-                    class="algorithmButton"
-                    id="quickSort"
-                    onClick={() => setFocus("quickSort")}
-                    style={{
-                        backgroundColor: focus === "quickSort" ? "green" : null,
-                        color: focus === "quickSort" ? "black" : null,
-                    }}
-                >
-                    <p>Quick Sort</p>
-                </div>
-                <div
-                    class="algorithmButton"
-                    id="heapSort"
-                    onClick={() => setFocus("heapSort")}
-                    style={{
-                        backgroundColor: focus === "heapSort" ? "green" : null,
-                        color: focus === "heapSort" ? "black" : null,
-                    }}
-                >
-                    <p>Heap Sort</p>
-                </div>
-                <div
-                    class="algorithmButton"
-                    id="mergeSort"
-                    onClick={() => setFocus("mergeSort")}
-                    style={{
-                        backgroundColor: focus === "mergeSort" ? "green" : null,
-                        color: focus === "mergeSort" ? "black" : null,
-                    }}
-                >
-                    <p>Merge Sort</p>
-                </div>
-                <div class="longButton" id="sortButton" onClick={() => sort()}>
-                    <p>Sort</p>
-                </div>
-                <div
-                    class="longButton"
-                    id="newArray"
-                    onClick={() => setArray(generate())}
-                >
-                    <p>Generate New Graph</p>
+
+                <div class="textBox">
+                    <div class="text">{Text(focus)}</div>
                 </div>
             </div>
         </>

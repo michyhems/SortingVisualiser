@@ -12,65 +12,206 @@ body{
 }
 
 .container{
-    width: 75%;
-    margin-left: 3%;
+    width: 70%;
+    margin-left: 1%;
     height: 45em;
     margin-top: 3%;
     position: absolute;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .bar{
     background-color: green;
     display: inline-block;
     margin-top: auto;
-    border-style: solid;
-    border-color: black;
 }
 
-.buttons{
-    width: 20%;
-    height: 40em;
-    float: right;
-    margin-top: 6%;
-    margin-right: 4.5%;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 20% 20% 10% 10%;
-    column-gap: 2%;
-    row-gap: 1%;
+.console{
+    width: 25%;
+    height: 36em;
+    margin-top: 5%;
+    margin-left: 73%;
+    border-radius: 10px;
+    background-image: radial-gradient(ellipse at top left, rgb(63, 62, 62, 0.5), rgb(23, 24, 24, 0.9) 60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 0;
 }
 
-.algorithmButton{
-    color: green;
-    border-style: solid;
-    border-color: green;
-    border-radius: 25px;
+.buttonRow{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    height: 2em;
+    margin-top: 5%;
+    position: relative;
+}
+
+.dropdown{
     text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.dropdownButton{
+    color: white;
+    width:10em;
+    height: 1.7em;
+    background-color: blue;
+    border-radius: 5px;
+    position: relative;
 }
 
-.algorithmButton:hover{
-    cursor: pointer;
+.menuItem{
+    background-color: #171818;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+}
+.menuItem:hover{
+    background-color: blue;
+}
+.menu{
+    margin-top: 1%;
+    width: 100%;
+    opacity: 0;
+}
+.dropdownButton:focus + .menu{
+    opacity: 1;
 }
 
-.algorithmButton p{
-    margin-top: 20%;
-    font-size: xx-large;
+.dropdownButton::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    padding: 3px;
+    border-radius: 5px;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.5;
 }
 
-.longButton{
+.sort{
+    color: white;
     background-color: green;
-    color: black;
-    grid-column-start: 1;
-    grid-column-end: -1 ;
-    font-size: xx-large;
+    width: 10%;
+    height: 1.7em;
     text-align: center;
-    border-radius: 25px;
+    border-radius: 5px;
+    position: relative;
 }
 
-.longButton p{
-    margin-top: -0.00001em;
+.sort::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: green;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    padding: 3px;
+    border-radius: 5px;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.5;
 }
 
-.longButton:hover{
+
+.newGraph{
+    color: white;
+    background-color: red;
+    width: 25%;
+    height: 1.7em;
+    text-align: center;
+    border-radius: 5px;
+    position: relative;
+}
+
+.newGraph::after{
+    content: '';
+    position: absolute;
+    background-color: red;
+    width: 100%;
+    height: 100%;
+    top:50%;
+    left:50%;
+    translate: -50% -50%;
+    padding: 3px;
+    border-radius: 5px;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.5;
+}
+
+.sort:hover, .newGraph:hover, .dropdownButton:hover, .menuItem:hover{
     cursor: pointer;
 }
+
+
+
+.textBox{
+    background-color: black;
+    width: 90%;
+    height: 70%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+}
+
+.text{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    color: white;
+    font-family: "Consolas";
+    font-size: 1.2em;
+    white-space: pre-line;
+}
+
+pre{
+    overflow-x: pre-wrap;
+}
+
+
+@property --angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.textBox::after, .textBox::before{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle),red, green, blue, red);
+    padding: 4px;
+    translate: -4px -4px;
+    border-radius: 10px;
+    z-index: -1;
+    animation: 3s spin linear infinite;
+}
+.textBox::before{
+    filter: blur(5px);
+}
+@keyframes spin{
+    from{
+        --angle: 0deg
+    }to{
+        --angle: 360deg
+    }
+}
+
+

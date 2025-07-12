@@ -1,6 +1,4 @@
-import { Animate } from "./animateSorting";
-
-function mergeSort(array, startIndex, endIndex, arrayCopy, animations) {
+export function mergeSort(array, startIndex, endIndex, arrayCopy, animations) {
     if (startIndex === endIndex) return;
     let midIndex = Math.floor((startIndex + endIndex) / 2);
     mergeSort(arrayCopy, startIndex, midIndex, array, animations);
@@ -37,10 +35,4 @@ function merge(array, startIndex, midIndex, endIndex, arrayCopy, animations) {
         k++;
         j++;
     }
-}
-
-export function animateMerge(array, element) {
-    let arrayCopy = array.slice();
-    let animations = mergeSort(array, 0, array.length - 1, arrayCopy, []);
-    Animate(element, animations);
 }

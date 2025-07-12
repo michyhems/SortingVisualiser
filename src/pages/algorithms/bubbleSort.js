@@ -1,6 +1,4 @@
-import { Animate } from "./animateSorting";
-
-function bubbleSort(array) {
+export function bubbleSort(array) {
     let isSorted = false;
     let animations = [];
     while (!isSorted) {
@@ -15,9 +13,4 @@ function bubbleSort(array) {
         }
     }
     return animations;
-}
-
-export function animateBubbleSort(array, element) {
-    const animations = bubbleSort(array);
-    Animate(element, animations, 5);
 }
