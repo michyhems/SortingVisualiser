@@ -61,7 +61,10 @@ const Visualiser = () => {
             index++;
             if (index === length || killAnimation.current === true) {
                 animationInProgress.current = false;
-                killAnimation.current = false;
+                if (killAnimation.current === true) {
+                    killAnimation.current = false;
+                }
+
                 cancelAnimationFrame(stopID);
             } else {
                 window.requestAnimationFrame(animateBar);
@@ -72,7 +75,10 @@ const Visualiser = () => {
     }
 
     function reset() {
-        if (!animationInProgress.current) setArray(generate());
+        if (animationInProgress.current === false) {
+            setArray(generate());
+            return;
+        }
         killAnimation.current = true;
         setArray(generate());
     }
