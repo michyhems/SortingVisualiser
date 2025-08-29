@@ -7,16 +7,19 @@ import { heapSort } from "./algorithms/heapSort";
 import "./visualiser.css";
 
 const Visualiser = () => {
+    //setting up global variables
     const [array, setArray] = useState([]);
     const [focus, setFocus] = useState("none");
     const [isComplete, setComplete] = useState(false);
     const animationInProgress = useRef(false);
     const killAnimation = useRef(false);
 
+    //generating graph values
     useEffect(() => {
         setArray(generate());
     }, []);
 
+    //Update the UI based on the user's selection of algorithm
     useEffect(() => {
         if (focus === "none") return;
         let algorithm = document.getElementsByClassName("algorithmButton");
@@ -43,6 +46,12 @@ const Visualiser = () => {
             .classList.toggle("hide");
     }, [focus]);
 
+    //Applies a shaking animation on the title (reset button) when the animation is complete
+    useEffect(() => {
+        document.getElementsByClassName("title")[0].classList.toggle("shake");
+    }, [isComplete]);
+
+    //parses the appropriate inputs to the animation function
     const sort = () => {
         if (focus === "none") return;
         if (isComplete) return;
@@ -65,6 +74,7 @@ const Visualiser = () => {
         }
     };
 
+    //function that animates the graph
     function Animate(animations) {
         let bars = document.getElementsByClassName("bar");
         var barId;
@@ -81,6 +91,7 @@ const Visualiser = () => {
             barStyle.height = `${value}%`;
             index++;
             if (index === length || killAnimation.current === true) {
+                //in case the reset button or the stop button is pressed while animation is running.
                 animationInProgress.current = false;
                 if (killAnimation.current === true) {
                     killAnimation.current = false;
@@ -88,6 +99,7 @@ const Visualiser = () => {
                     setComplete(true);
                 }
                 cancelAnimationFrame(stopID);
+                //hides the sort button when animation is running.
                 document
                     .getElementsByClassName("sortButton")[0]
                     .classList.toggle("hide");
@@ -102,6 +114,7 @@ const Visualiser = () => {
         window.requestAnimationFrame(animateBar);
     }
 
+    //resets the graph
     function reset() {
         setComplete(false);
         if (animationInProgress.current === false) {
@@ -113,6 +126,7 @@ const Visualiser = () => {
         setArray(generate());
     }
 
+    //the sort and stop animation buttons
     const buttons = () => {
         return (
             <div class="buttons">
@@ -126,6 +140,7 @@ const Visualiser = () => {
         );
     };
 
+    //UI component through which the user can choose an algorithm
     const algorithms = () => {
         const algorithmList = () => {
             return (
@@ -177,7 +192,8 @@ const Visualiser = () => {
                 </>
             );
         };
-
+        //the buttons and the UI component and displayed in the nav bar in the default and low
+        //width versions
         return (
             <>
                 <div class="algorithmTitles">
@@ -197,15 +213,17 @@ const Visualiser = () => {
         );
     };
 
+    //funciton to hide the dropdown menu (use in low width settings)
     const dropdown = () => {
         const content = document.getElementsByClassName("dropContent");
         content[0].classList.toggle("hide");
     };
 
+    //where all components are assembled.
     return (
         <div class="body">
             <nav>
-                <div class="title" onClick={() => reset()}>
+                <div class="title shake" onClick={() => reset()}>
                     SortingVisualiser
                 </div>
                 <div>{algorithms()}</div>

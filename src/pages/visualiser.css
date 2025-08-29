@@ -10,6 +10,7 @@ body{
     font-family: Poppins;
 }
 
+/*display flex was used as there are only two components in the UI*/
 .body{
     height: 100vh;
     width: 100vw;
@@ -19,6 +20,8 @@ body{
     align-items: center;
 }
 
+
+/*Navbar styling*/
 nav{
     width: 95vw;
     height: 40px;
@@ -33,16 +36,48 @@ nav{
     border-radius: 25px;
 }
 
+/*SortingVisualiser title in navbar*/
 .title{
     margin-left: 1em;
     position: relative;
+    font-weight: bold;
 }
 
 .title:hover{
     cursor: pointer;
 }
 
+.shake{
+    animation: shake 0.8s linear infinite;
+}
 
+.shake:hover{
+    animation-play-state: paused;
+}
+
+@keyframes shake {
+  5%{
+    transform: translate3d(0, 0, 0);
+  }
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+
+/*Algorithm titles in navbar*/
 .algorithmTitles{
     height: 100%;
     display: flex;
@@ -51,6 +86,7 @@ nav{
     margin-right: 1em;
 }
 
+/*gives the titles in the navbar a green colour*/
 .activeFocus{
     position: relative;
     color: green;
@@ -60,6 +96,7 @@ nav{
     cursor: pointer;
 }
 
+/*gives the selected title in the navbar a green glow*/
 .activeFocus::after{
     content: '';
     height: 100%;
@@ -75,6 +112,7 @@ nav{
     opacity: 0.2;
 }
 
+/*sort and stop buttons in navbar*/
 .buttons{
     display: flex;
 }
@@ -92,6 +130,7 @@ nav{
     cursor: pointer;
 }
 
+/*start button glow*/
 .sortButton::after{
     content: '';
     height: 100%;
@@ -120,6 +159,8 @@ nav{
     cursor: pointer;
 }
 
+
+/*stop button glow*/
 .stopButton::after{
     content: '';
     height: 100%;
@@ -135,6 +176,8 @@ nav{
     opacity: 0.7;
 }
 
+
+/*styling for small width view*/
 .shortForm{
     display: flex;
     align-items: flex-start;
@@ -159,6 +202,8 @@ nav{
     display: none;
 }
 
+
+/*styling for graph*/
 .graphContainer{
     display: flex;
     align-items: flex-end;
